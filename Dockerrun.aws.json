@@ -3,21 +3,21 @@
     "containerDefinitions": [
         {
             "name": "frontend",
-            "image": "5312595/docker-frontend",
+            "image": "5312559/docker-frontend",
             "hostname": "frontend",
             "essential": false,
             "memory": 128
         },
         {
             "name": "backend",
-            "image": "5312595/docker-backend",
+            "image": "5312559/docker-backend",
             "hostname": "backend",
             "essential": false,
             "memory": 128
         },
         {
             "name": "nginx",
-            "image": "5312595/docker-nginx",
+            "image": "5312559/docker-nginx",
             "hostname": "nginx",
             "essential": true,
             "portMappings": [
