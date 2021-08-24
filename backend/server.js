@@ -1,4 +1,4 @@
-//필요한 모듈 가져오기 
+//필요한 모듈 가져오기
 const express = require("express");
 
 const db = require('./db');
@@ -9,13 +9,22 @@ const app = express();
 //JSON 형태로 전달되는 요청의 본문을 해석할 수 있게 등록
 app.use(express.json());
 
+// 테이블 생성하기
+db.pool.query(`CREATE TABLE lists (
+    id INTEGER AUTO_INCREMENT,
+    value TEXT,
+    PRIMARY KEY (id)
+)`, (err, results, fileds) => {
+    console.log('results', results)
+})
+
 app.listen(5000, () => {
     console.log('애플리케이션이 5000번 포트에서 시작됐습니다.')
 })
 
-//DB의 lists 테이블에 있는 모든 데이터를 프런트엔드 서버로 보내주기 
+//DB의 lists 테이블에 있는 모든 데이터를 프런트엔드 서버로 보내주기
 app.get('/api/values', function (req, res) {
-    //DB에서 모든 정보 가져오기 
+    //DB에서 모든 정보 가져오기
     db.pool.query('SELECT * FROM lists;',
         (err, results, fileds) => {
             if (err)
