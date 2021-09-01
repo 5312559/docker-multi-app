@@ -2,7 +2,9 @@ version: "3"
 services: 
   frontend:
     # 개발 환경을 위한 도커 파일이 위치한 경로를 알려줍니다.
-    image: 5312559/docker-frontend
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
     # 볼륨을 설정합니다. 
     volumes:
       - /app/node_modules
@@ -12,22 +14,26 @@ services:
 
   nginx:
     restart: always
-    image: 5312559/docker-nginx
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
     ports: 
-      - "80:80"
+      - "3000:80"
 
   backend:
-    image: 5312559/docker-backend
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./backend
     container_name: app_backend
     volumes:
       - /app/node_modules
       - ./backend:/app
     environment: 
-      MYSQL_HOST: $MYSQL_HOST
-      MYSQL_USER: $MYSQL_USER 
-      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      MYSQL_DATABASE: $MYSQL_DATABASE
-      MYSQL_PORT: $MYSQL_PORT 
+      MYSQL_HOST: mysql
+      MYSQL_USER: root 
+      MYSQL_ROOT_PASSWORD: johnahn777
+      MYSQL_DATABASE: myapp
+      MYSQL_PORT: 3306 
 
   #mysql:
   #  build: ./mysql
